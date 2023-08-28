@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="297" pageHeight="210" orientation="Landscape" columnWidth="257" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="3.4522712143931042"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_barang" class="java.lang.String"/>
+	<parameter name="realPath" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select * from barang where id_barang = $P{id_barang}]]>
+	</queryString>
+	<field name="id_barang" class="java.lang.String"/>
+	<field name="nama_barang" class="java.lang.String"/>
+	<field name="harga_beli" class="java.lang.Integer"/>
+	<field name="harga_jual" class="java.lang.Integer"/>
+	<field name="stok" class="java.lang.Integer"/>
+	<field name="keuntungan" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<image>
+				<reportElement x="12" y="10" width="150" height="100"/>
+				<imageExpression><![CDATA[$P{realPath}]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

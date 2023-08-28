@@ -1,0 +1,206 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package panel;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import koneksi.Session;
+import koneksi.koneksi;
+import static panel.Barang.tabeldashboard;
+
+/**
+ *
+ * @author asus
+ */
+public class Barang_Masuk extends javax.swing.JPanel {
+
+    /**
+     * Creates new form Barang_Masuk
+     */
+     public void showdata(){
+        DefaultTableModel model = new DefaultTableModel();
+        
+        jTable1.setModel(model);
+        
+        model.addColumn("No Pembelian");
+        model.addColumn("Tanggal");
+        model.addColumn("Kasir");
+        model.addColumn("Nama Barang");
+        model.addColumn("Harga Beli");
+        model.addColumn("Qty");
+        
+        
+       try {
+            Statement s = koneksi.configDB().createStatement();
+            ResultSet rs = s.executeQuery("select pemasokan.id_pemasokan, pemasokan.tanggal, user.nama_lengkap, barang.nama_barang, detail_pemasokan.harga_baru, "
+                    + "detail_pemasokan.qty from pemasokan join user on pemasokan.nik = user.nik join detail_pemasokan on detail_pemasokan.id_pemasokan = pemasokan.id_pemasokan "
+                    + "join barang on barang.id_barang = detail_pemasokan.id_barang order by pemasokan.id_pemasokan asc");
+            
+            while(rs.next())
+            {
+                model.addRow(new Object[] {
+                    rs.getString("id_pemasokan"),
+                    rs.getString("tanggal"),
+                    rs.getString("nama_lengkap"),
+                    rs.getString("nama_barang"),
+                    rs.getString("harga_baru"),
+                    rs.getString("qty"),
+                    
+                });
+                jTable1.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal"+e.getMessage());
+        }
+    }
+     
+     public void urutan(){
+        String getDate = "yyyy-MM-dd";
+        SimpleDateFormat fm = new SimpleDateFormat(getDate);
+        String tanggal = String.valueOf(fm.format(jDate3.getDate()));
+        
+         DefaultTableModel model = new DefaultTableModel();
+        
+        jTable1.setModel(model);
+        
+        model.addColumn("No Pembelian");
+        model.addColumn("Tanggal");
+        model.addColumn("Kasir");
+        model.addColumn("Nama Barang");
+        model.addColumn("Harga Beli");
+        model.addColumn("Qty");
+        
+        
+       try {
+            Statement s = koneksi.configDB().createStatement();
+            ResultSet rs = s.executeQuery("select pemasokan.id_pemasokan, pemasokan.tanggal, user.nama_lengkap, barang.nama_barang, detail_pemasokan.harga_baru, "
+                    + "detail_pemasokan.qty from pemasokan join user on pemasokan.nik = user.nik join detail_pemasokan on detail_pemasokan.id_pemasokan = pemasokan.id_pemasokan "
+                    + "join barang on barang.id_barang = detail_pemasokan.id_barang where pemasokan.tanggal ='"+tanggal+"' order by pemasokan.id_pemasokan asc");
+            
+            while(rs.next())
+            {
+                model.addRow(new Object[] {
+                    rs.getString("id_pemasokan"),
+                    rs.getString("tanggal"),
+                    rs.getString("nama_lengkap"),
+                    rs.getString("nama_barang"),
+                    rs.getString("harga_baru"),
+                    rs.getString("qty"),
+                    
+                });
+                jTable1.setModel(model);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Gagal"+e.getMessage());
+        }
+     }
+    
+    public Barang_Masuk() {
+        try{
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels())
+            {
+                if ("".equals(info.getName()))
+                {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }catch(Exception ex){
+            
+        }
+        initComponents();
+         jTable1.getTableHeader().setFont(new Font("Fredoka One", Font.CENTER_BASELINE, 16));
+        jTable1.getTableHeader().setOpaque(false);
+        jTable1.getTableHeader().setBackground(new Color(241,175,9));
+        jTable1.getTableHeader().setForeground(new Color(0, 0, 0));
+        jTable1.setRowHeight(25);
+        txtusernamee1.setText(Session.get_username());
+        showdata();
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        txtusernamee1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jDate3 = new com.toedter.calendar.JDateChooser();
+        buttongradient1 = new Button.buttongradient();
+        jLabel1 = new javax.swing.JLabel();
+
+        setMinimumSize(new java.awt.Dimension(1571, 965));
+        setPreferredSize(new java.awt.Dimension(1571, 965));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtusernamee1.setFont(new java.awt.Font("YouYuan", 1, 18)); // NOI18N
+        txtusernamee1.setText("jLabel2");
+        add(txtusernamee1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1300, 60, 150, 30));
+
+        jTable1 = new javax.swing.JTable(){
+            public boolean isCellEditable(int rowIndex, int colIndex){
+                return false;
+            }
+        };
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable1.setFocusable(false);
+        jTable1.setSelectionBackground(new java.awt.Color(241, 175, 9));
+        jTable1.getTableHeader().setResizingAllowed(false);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(jTable1);
+
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 1440, 690));
+        add(jDate3, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 50, 370, 60));
+
+        buttongradient1.setText("buttongradient1");
+        buttongradient1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttongradient1ActionPerformed(evt);
+            }
+        });
+        add(buttongradient1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 50, 60, 60));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/foto/barg masuk.png"))); // NOI18N
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void buttongradient1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttongradient1ActionPerformed
+        // TODO add your handling code here:
+        urutan();
+    }//GEN-LAST:event_buttongradient1ActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private Button.buttongradient buttongradient1;
+    private com.toedter.calendar.JDateChooser jDate3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    public static javax.swing.JTable jTable1;
+    private javax.swing.JLabel txtusernamee1;
+    // End of variables declaration//GEN-END:variables
+}
